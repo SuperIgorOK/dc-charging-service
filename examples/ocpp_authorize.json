@@ -1,0 +1,11 @@
+[
+  2,
+  "56657027-7c98-47be-ad15-8943b6f8bddc",
+  "Authorize",
+  {
+    "idToken": {
+      "idToken": "TEST_TOKEN",
+      "type": "Central"
+    }
+  }
+]

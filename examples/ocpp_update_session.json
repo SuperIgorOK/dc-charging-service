@@ -1,0 +1,48 @@
+[
+  2,
+  "a241566a-db45-4791-bd0e-4ec890e8d0ae",
+  "TransactionEvent",
+  {
+    "eventType": "Updated",
+    "timestamp": "2025-07-25T07:24:35.737366+00:00",
+    "triggerReason": "MeterValueClock",
+    "seqNo": 2,
+    "transactionInfo": {
+      "transactionId": "1234"
+    },
+    "meterValue": [
+      {
+        "timestamp": "2025-07-25T07:24:35.737366+00:00",
+        "sampledValue": [
+          {
+            "value": 231.0,
+            "measurand": "Voltage",
+            "phase": "L1"
+          },
+          {
+            "value": 232.0,
+            "measurand": "Voltage",
+            "phase": "L2"
+          },
+          {
+            "value": 230.5,
+            "measurand": "Voltage",
+            "phase": "L3"
+          },
+          {
+            "value": 17,
+            "measurand": "Current.Import"
+          }
+        ]
+      }
+    ],
+    "evse": {
+      "id": 1,
+      "connectorId": 1
+    },
+    "customData": {
+      "vendorId": "my_vendor_id",
+      "temperature": 41
+    }
+  }
+]

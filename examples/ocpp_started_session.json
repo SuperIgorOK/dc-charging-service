@@ -1,0 +1,18 @@
+[
+  2,
+  "cfd0dfed-39cf-4370-83f6-588d70e82619",
+  "TransactionEvent",
+  {
+    "eventType": "Started",
+    "timestamp": "2025-07-25T07:24:32.721205+00:00",
+    "triggerReason": "Authorized",
+    "seqNo": 1,
+    "transactionInfo": {
+      "transactionId": "1234"
+    },
+    "evse": {
+      "id": 1,
+      "connectorId": 1
+    }
+  }
+]
