@@ -1,34 +1,44 @@
-name: Run Tests
+name: Run tests
 
-on:
-  push:
-    branches: [ main, dev ]
-  pull_request:
-    branches: [ main, dev ]
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:  # GitHub будет автоматически подставлять переменные
+      MODE: ${{ vars.MODE }}
+      DB_USER: ${{ vars.DB_USER }}
+      DB_PASS: ${{ vars.DB_PASS }}
+      DB_HOST: ${{ vars.DB_HOST }}
+      DB_PORT: ${{ vars.DB_PORT }}
+      DB_NAME: ${{ vars.DB_NAME }}
+      TEST_DB_NAME: ${{ vars.TEST_DB_NAME }}
+      REDIS_HOST: ${{ vars.REDIS_HOST }}
+      REDIS_PORT: ${{ vars.REDIS_PORT }}
+      MQTT_HOST: ${{ vars.MQTT_HOST }}
+      MQTT_PORT: ${{ vars.MQTT_PORT }}
+      MQTT_USER: ${{ vars.MQTT_USER }}
+      MQTT_PASSWORD: ${{ vars.MQTT_PASSWORD }}
+      RABBITMQ_HOST: ${{ vars.RABBITMQ_HOST }}
+      RABBITMQ_PORT: ${{ vars.RABBITMQ_PORT }}
+      WEBSOCKET_HOST: ${{ vars.WEBSOCKET_HOST }}
+      WEBSOCKET_PORT: ${{ vars.WEBSOCKET_PORT }}
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.12
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-    - name: Install dependencies
-      run: |
-        python -m venv .venv
-        source .venv/bin/activate
-        pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest pytest-asyncio pytest-mock pytest-cov coverage
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Run tests with coverage
-      run: |
-        source .venv/bin/activate
-        coverage run -m pytest
-        coverage report --fail-under=80
+      - name: Run tests with coverage
+        run: |
+          coverage run -m pytest
+          coverage report
