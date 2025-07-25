@@ -101,20 +101,32 @@ services:
       retries: 5
       start_period: 15s
 
-#  worker:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    container_name: dc_worker
-#    depends_on:
-#      - app
-#      - rabbitmq
-#    env_file:
-#      - .env
-#    command: >
-#      sh -c "celery -A celery_app worker --loglevel=info"
-#    volumes:
-#      - .:/app
+
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    command: >
+      sh -c "celery -A apps.celery.worker worker --loglevel=info"
+    volumes:
+      - .:/app
+    depends_on:
+      - backend
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+
+  celery_beat:
+    build: .
+    container_name: celery_beat
+    command: >
+      sh -c "celery -A apps.celery.worker beat --loglevel=info"
+    volumes:
+      - .:/app
+    depends_on:
+      - backend
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
 
   adminer:
     image: adminer
