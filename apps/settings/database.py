@@ -3,7 +3,6 @@ from typing import AsyncIterator
 
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, declared_attr
-from sqlalchemy.pool import NullPool
 
 from apps.settings.config import get_settings
 
@@ -11,12 +10,8 @@ from apps.settings.config import get_settings
 def get_engine():
     settings = get_settings()
 
-    if settings.MODE == "TEST":
-        url = settings.TEST_DATABASE_URL
-        params = {"poolclass": NullPool}
-    else:
-        url = settings.DATABASE_URL
-        params = {}
+    url = settings.DATABASE_URL
+    params = {}
 
     return url, params
 
