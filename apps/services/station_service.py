@@ -48,3 +48,9 @@ class StationService:
     async def get_or_create(self, station_id: UUID) -> Station:
         station = await self.station_repo.get_or_create(station_id)
         return station
+
+    async def update(self, station: Station) -> None:
+        await self.station_repo.update(station)
+
+    async def get_all(self) -> list[Station]:
+        return await self.station_repo.get_all()

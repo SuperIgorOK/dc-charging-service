@@ -3,8 +3,8 @@ from datetime import datetime, timedelta, timezone
 from celery import Celery
 
 from apps.enums.station_enums import StationStatusEnum
-from apps.repositories.station_repo import StationRepository
 from apps.schemas.redis_schema import ConnectorStatusRedisModel
+from apps.services.station_service import StationService
 from apps.settings.database import get_session_context
 
 celery = Celery(__name__)
@@ -21,8 +21,8 @@ async def _check_all_stations_availability():
     timeout = datetime.now(timezone.utc) - timedelta(minutes=2)
 
     async with get_session_context() as session:
-        station_repo = StationRepository(session)
-        stations = await station_repo.get_all()
+        station_service = StationService(session)
+        stations = await station_service.get_all()
 
         for station in stations:
             station_id = station.id
@@ -38,4 +38,4 @@ async def _check_all_stations_availability():
 
             if all_expired and station.status != StationStatusEnum.Unavailable:
                 station.status = StationStatusEnum.Unavailable
-                await station_repo.update(station)
+                await station_service.update(station)
